@@ -95,10 +95,12 @@ In your `README.md`, include:
 
 ### Deadline
 
-Submit within 72 hours of receiving this task.
+Submit within 48 hours of receiving this task.
 
 ---
 
 ## Listings Data
 
 You will receive the `listings.json` file separately. Please create this file inside your backend project and use it locally to serve data.
+## Note
+you can use Ai to get your task done faster but ensure to document where Ai was used
