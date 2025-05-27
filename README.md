@@ -1,106 +1,33 @@
+# Worksquare Fullstack Developer Task
 
-# Worksquare Senior Fullstack Developer Vetting Task
+## Setup Instructions
 
-Welcome to the vetting assessment for Fullstack Developers at Worksquare!
+### Backend (Laravel 12.16.0)
+1. Navigate to `backend/`.
+2. Install dependencies: `composer install`.
+3. Copy `.env.example` to `.env` and configure MySQL.
+4. Run migrations: `php artisan migrate`.
+5. Seed data: `php artisan db:seed --class=ListingsSeeder`.
+6. Generate JWT secret: `php artisan jwt:secret`.
+7. Start server: `php artisan serve`.
+8. API docs: `http://localhost:8000/api/documentation`.
 
-This task is designed to evaluate your skills in building both a backend API and a frontend interface, with strong attention to architecture, decision-making, and code clarity.
+### Frontend (Vue.js)
+1. Navigate to `frontend/`.
+2. Install dependencies: `npm install`.
+3. Start development server: `npm run serve`.
+4. Access at `http://localhost:8080`.
 
----
+## Tools and Libraries
+- **Backend**: Laravel 12.16.0, PHP 8.4.0, MySQL, tymon/jwt-auth, l5-swagger
+- **Frontend**: Vue 3, Vue Router, Axios, Tailwind CSS
+- **Template**: ThemeForest HTML template (assets in `frontend/public/assets`)
 
-## Objective
-
-Build a fullstack housing listings app that allows users to browse available properties using filters and search options. Focus on clean architecture, good engineering decisions, and thoughtful documentation.
-
----
-
-## Requirements
-
-### Backend (Choose One)
-
-* Stack Options: Node.js (Express), Laravel, Django, Flask
-* Serve data from a provided `listings.json` file
-* Create a RESTful API with the following endpoints:
-
-  * Paginated listings
-  *  Filter by location/type
-  *  Get a single listing by ID
-  * JWT Authentication: Protect at least one route 
-  * Rate Limiting: Prevent abuse (e.g., 100 requests per hour per IP)
-  * Middleware: Log incoming requests
-  * Error Handling: Use consistent and structured error responses
-  * API Documentation: Swagger or OpenAPI
-
-### Frontend (Choose One)
-
-* Frameworks: React, Vue.js, or Angular
-* Build a responsive UI that:
-
-  * Fetches data from your API
-  * Displays listings in a user-friendly layout
-  * Includes search/filter functionality
-  * Shows loading and empty states
-* Styling: Tailwind CSS, CSS Modules, or equivalent
-
----
-
-## Architectural Design (Required)
-
-Before you start coding, design your system architecture. You will be evaluated on how you structure and plan your work.
-
-Include the following in a `docs/` folder or within the README:
-
-* Database and API Design (ER Diagram or JSON model schema)
-* Backend folder structure breakdown
-* Brief explanation of your engineering decisions:
-
-  * Why you chose your stack
-  * How you handled authentication and security
-  * How you approached scalability and maintainability
-* Visual diagrams (use tools like draw\.io, Excalidraw, or markdown-based diagrams)
-
----
-
-## Documentation
-
-In your `README.md`, include:
-
-* Setup instructions for both frontend and backend
-* Tools and libraries used
-* Link to Swagger or API docs
-* A “Code Notes” section covering:
-
-  * Your development approach
-  * Engineering decisions made and why
-  * Trade-offs or improvements you would make with more time
-
----
-
-## What We’re Looking For
-
-* Clean fullstack architecture
-* Solid engineering thinking
-* Proper API and frontend integration
-* Good Git practices: meaningful commits and clear structure
-* Developer Experience (DX): clear setup, organized structure
-* Quality UI/UX
-
----
-
-## Submission Guidelines
-
-1. Fork this repo
-2. Create two folders: `/frontend` and `/backend`
-3. Push your completed task to your forked repo
-4. Email your repo link via email
-
-### Deadline
-
-Submit within 48 hours of receiving this task.
-
----
-
-## Listings Data
-
-You will receive the `listings.json` file separately. Please create this file inside your backend project and use it locally to serve data.
-## Note
-you can use Ai to get your task done faster but ensure to document where Ai was used
+## Code Notes
+- **Approach**: Modular architecture with reusable components and RESTful API.
+- **Decisions**:
+  - Laravel for robust backend features.
+  - Vue.js for lightweight, component-based UI.
+  - MySQL for efficient data querying.
+- **Trade-offs**: Used MySQL instead of direct JSON file reads for performance.
+- **Improvements**: Add caching (Redis) and unit tests with more time.
