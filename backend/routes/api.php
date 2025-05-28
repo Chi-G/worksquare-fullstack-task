@@ -36,33 +36,22 @@ use App\Http\Controllers\ListingController;
  *     scheme="bearer",
  *     bearerFormat="JWT"
  * )
- */
+ */ 
 
 // Public routes
-Route::group(['prefix' => 'v1'], function () {
-    // Authentication routes
-    Route::group(['prefix' => 'auth'], function () {
-        Route::post('register', [AuthController::class, 'register']);
-        Route::post('login', [AuthController::class, 'login']);
-    });
-
-    // Public listing routes
-    Route::get('listings/{id}', [ListingController::class, 'show']);
-    Route::get('listings/filter', [ListingController::class, 'filter']);
-});
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/listings/{id}', [ListingController::class, 'show']);
+Route::get('/listings/filter', [ListingController::class, 'filter']);
 
 // Protected routes
-Route::group(['prefix' => 'v1', 'middleware' => ['auth:api', 'throttle:api']], function () {
-    // Authentication routes
-    Route::group(['prefix' => 'auth'], function () {
-        Route::post('logout', [AuthController::class, 'logout']);
-        Route::post('refresh', [AuthController::class, 'refresh']);
-        Route::get('me', [AuthController::class, 'me']);
-    });
+Route::middleware(['auth:api', 'throttle:api'])->group(function () {
+    // Listings
+    Route::get('/listings', [ListingController::class, 'index']);
 
-    // Protected listing routes
-    Route::group(['prefix' => 'listings'], function () {
-        Route::get('/', [ListingController::class, 'index']);
-    });
+    // Auth routes
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::get('/me', [AuthController::class, 'me']);
 });
 

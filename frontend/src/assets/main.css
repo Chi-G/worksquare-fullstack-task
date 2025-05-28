@@ -1,3 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom styles */
+@layer components {
+  .btn {
+    @apply inline-block py-2 px-4 rounded-md transition duration-300;
+  }
+
+  .form-input {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+  }
+
+  .form-select {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent;
+  }
+}
+
+/* Dark mode styles */
+.dark {
+  @apply bg-slate-900 text-white;
+}
+
+.dark .form-input,
+.dark .form-select {
+  @apply bg-slate-800 border-slate-700 text-white;
+}
+
+/* Back to top button */
+.back-to-top {
+  @apply fixed hidden text-lg rounded-full z-10 bottom-5 end-5 size-9 text-center bg-green-600 text-white justify-center items-center;
+}
+
+/* Dark mode toggle */
+.checkbox:checked + .label .ball {
+  transform: translateX(24px);
+}
+
+.ball {
+  transition: transform 0.2s linear;
+}
+
+/* Navigation styles */
+.navigation-menu {
+  @apply flex items-center space-x-4;
+}
+
+.navigation-menu a {
+  @apply text-slate-400 hover:text-green-600 transition duration-300;
+}
+
+/* Mobile menu */
+@media (max-width: 1024px) {
+  .navigation-menu {
+    @apply flex-col items-start space-y-2;
+  }
+}

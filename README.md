@@ -31,3 +31,4 @@
   - MySQL for efficient data querying.
 - **Trade-offs**: Used MySQL instead of direct JSON file reads for performance.
 - **Improvements**: Add caching (Redis) and unit tests with more time.
+- **Navigation**: Limited to Home, Property, and Contact pages as per requirements.
