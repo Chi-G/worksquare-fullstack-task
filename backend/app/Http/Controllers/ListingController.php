@@ -68,8 +68,8 @@ class ListingController extends Controller
     public function index(Request $request)
     {
         try {
-            $listings = Listing::paginate(10);
-            return response()->json($listings, Response::HTTP_OK);
+            $listings = Listing::paginate(6);
+            return response()->json($listings, Response::HTTP_OK); 
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Failed to fetch listings',

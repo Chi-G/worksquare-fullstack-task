@@ -10,9 +10,7 @@
         <ul class="space-y-2">
           <li><a href="#" class="hover:text-green-600">About us</a></li>
           <li><a href="#" class="hover:text-green-600">Services</a></li>
-          <li><a href="#" class="hover:text-green-600">Pricing</a></li>
-          <li><a href="#" class="hover:text-green-600">Blog</a></li>
-          <li><a href="/login" class="hover:text-green-600">Login</a></li>
+          <li><a href="#" class="hover:text-green-600">Pricing</a></li>          
         </ul>
       </div>
       <div>
@@ -23,7 +21,7 @@
       </div>
     </div>
     <div class="container mx-auto mt-8 text-center">
-      <p>© 2025 DreamWell Estate, Design & Develop with ♥ by Chijindu.</p>
+      <p>© Copyright 2023 DreamDwell Estates - All right reserved</p>
     </div>
   </footer>
 </template>

@@ -137,7 +137,7 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
+    }, 
     changePage(page) {
       this.currentPage = page;
       this.fetchListings();

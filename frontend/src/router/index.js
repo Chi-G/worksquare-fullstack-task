@@ -7,7 +7,11 @@ import RegisterPage from '../views/RegisterPage.vue';
 
 const routes = [
   { path: '/', name: 'HomePage', component: HomePage },
-  { path: '/property', name: 'PropertyPage', component: PropertyPage },
+  { 
+    path: '/property', 
+    name: 'PropertyPage', 
+    component: PropertyPage,
+  },
   { path: '/contact', name: 'ContactPage', component: ContactPage },
   { path: '/login', name: 'LoginPage', component: LoginPage },
   { path: '/register', name: 'RegisterPage', component: RegisterPage },
@@ -17,6 +21,10 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  next();
 });
 
 export default router;

@@ -1,3 +1,7 @@
-export default {
-  apiUrl: 'http://127.0.0.1:8000/api',
-};
+// import axios from 'axios';
+
+// const apiInstance = axios.create({
+//   baseURL: import.meta.env.APIBACKEND
+// });
+
+// export default apiInstance;

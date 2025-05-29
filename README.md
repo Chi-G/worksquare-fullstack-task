@@ -15,8 +15,8 @@
 ### Frontend (Vue.js)
 1. Navigate to `frontend/`.
 2. Install dependencies: `npm install`.
-3. Start development server: `npm run serve`.
-4. Access at `http://localhost:8080`.
+3. Start development server: `npm run dev`.
+4. Access at `http://localhost:3000`.
 
 ## Tools and Libraries
 - **Backend**: Laravel 10, PHP 8.4.0, MySQL, tymon/jwt-auth, l5-swagger

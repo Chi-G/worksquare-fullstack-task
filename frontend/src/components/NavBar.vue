@@ -9,34 +9,35 @@
             <span v-if="user" class="text-gray-700">Welcome, {{ user.name }}!</span>
           </div>
           
-          <!-- Mobile Menu Button - Visible on mobile (<768px), hidden on desktop (≥768px) -->
+          <!-- Mobile Menu Button -->
           <div class="block md:hidden">
             <button @click="toggleMenu" class="text-gray-600 hover:text-green-600">
               <svg v-if="!isMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
               </svg>
-              <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </button>
           </div>
 
-          <!-- Desktop Navigation - Visible on desktop (≥768px), hidden on mobile (<768px) -->
+          <!-- Desktop Navigation -->
           <div class="hidden md:flex items-center space-x-4">
             <router-link 
               to="/" 
               class="hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
-              active-class="bg-green-600 text-white"
+              active-class="bg-green-600 text-white hover:text-white"
             >Home</router-link>
             <router-link 
+              v-if="user"
               to="/property" 
               class="hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
-              active-class="bg-green-600 text-white"
+              active-class="bg-green-600 text-white hover:text-white"
             >Property</router-link>
             <router-link 
               to="/contact" 
               class="hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
-              active-class="bg-green-600 text-white"
+              active-class="bg-green-600 text-white hover:text-white"
             >Contact</router-link>
             <div v-if="!user" class="flex space-x-6">
               <router-link to="/login">
@@ -52,7 +53,7 @@
           </div>
         </div>
 
-        <!-- Mobile Navigation - Visible when menu is open on mobile -->
+        <!-- Mobile Navigation -->
         <div v-show="isMenuOpen" class="md:hidden mt-4 space-y-2">
           <router-link 
             to="/" 
@@ -60,9 +61,10 @@
             active-class="bg-green-600 text-white"
           >Home</router-link>
           <router-link 
+            v-if="user"
             to="/property" 
             class="block hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
-            active-class="bg-green-600 text-white"
+            active-class="bg-green-600 text-white hover:text-white"
           >Property</router-link>
           <router-link 
             to="/contact"  
@@ -83,9 +85,8 @@
         </div>
       </div>
     </nav>
-  <!-- Spacer div to prevent content from hiding behind fixed navbar -->
-  <div v-if="isScrolled" class="h-16"></div>
-</div>
+    <div v-if="isScrolled" class="h-16"></div>
+  </div>
 </template>
 
 <script>
@@ -110,7 +111,7 @@ export default {
     async logout() {
       try {
         await logout();
-        localStorage.removeItem('token');
+        localStorage.removeItem('auth');
         localStorage.removeItem('user');
         this.user = null;
         this.$router.push('/login');
@@ -124,13 +125,19 @@ export default {
         this.user = JSON.parse(user);
       }
     },
+    refreshUser() {
+      this.checkUser();
+    },
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
     this.checkUser();
+    // Listen for storage changes (e.g., login/logout from other tabs)
+    window.addEventListener('storage', this.refreshUser);
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('storage', this.refreshUser);
   },
 };
 </script>
