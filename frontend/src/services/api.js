@@ -17,12 +17,21 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Add response interceptor for unauthorized errors
+// Add response interceptor for unauthorized errors and network issues
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    const token = response.data?.token;
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+    return response;
+  },
   (error) => {
-    if (error.response && error.response.status === 401) {
+    if (!error.response) {
+      console.error('Network error:', error.message);
+    } else if (error.response.status === 401) {
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
       window.location.href = '/login';
     }
     return Promise.reject(error);
@@ -33,6 +42,6 @@ export const getListings = (page = 1) => api.get(`/listings?page=${page}`);
 export const getListing = (id) => api.get(`/listings/${id}`);
 export const filterListings = (params) => api.get('/listings/filter', { params });
 export const login = (data) => api.post('/login', data);
-export const register = (data) => api.post('/register', data);
+export const logout = () => api.post('/logout');
 
 export default api;

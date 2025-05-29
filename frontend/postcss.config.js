@@ -1,8 +1,9 @@
-/** @type {import('tailwindcss').Config} */
+import tailwindcss from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
+
 export default {
-  content: ['./src/**/*.{vue,js,ts,jsx,tsx}'],
-  theme: {
-    extend: {}
-  },
-  plugins: []
-}
+  plugins: [
+    tailwindcss(),
+    autoprefixer(),
+  ],
+};

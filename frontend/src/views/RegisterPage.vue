@@ -1,3 +1,4 @@
+```vue
 <template>
   <div class="min-h-screen bg-cover bg-center" style="background-image: url('/assets/images/login-bg.jpg')">
     <div class="min-h-screen flex items-center justify-center bg-black bg-opacity-50">

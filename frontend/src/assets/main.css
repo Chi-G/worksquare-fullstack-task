@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global reset */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+}
+
 /* Custom styles */
 @layer components {
   .btn {
@@ -13,7 +20,7 @@
   }
 
   .form-label {
-    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
+    @apply block text-sm font-medium text-gray-700 mb-2;
   }
 
   .form-select {
@@ -21,33 +28,14 @@
   }
 }
 
-/* Dark mode styles */
-.dark {
-  @apply bg-slate-900 text-white;
-}
-
-.dark .form-input,
-.dark .form-select {
-  @apply bg-slate-800 border-slate-700 text-white;
-}
-
 /* Back to top button */
 .back-to-top {
   @apply fixed hidden text-lg rounded-full z-10 bottom-5 end-5 size-9 text-center bg-green-600 text-white justify-center items-center;
 }
 
-/* Dark mode toggle */
-.checkbox:checked + .label .ball {
-  transform: translateX(24px);
-}
-
-.ball {
-  transition: transform 0.2s linear;
-}
-
 /* Navigation styles */
 .navigation-menu {
-  @apply flex items-center space-x-4;
+  @apply flex items-center space-x-6; /* Increased spacing between menu items */
 }
 
 .navigation-menu a {

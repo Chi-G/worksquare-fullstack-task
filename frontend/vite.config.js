@@ -4,16 +4,35 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [vue()],
+  base: '/dist/',
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, 'src'),
     },
   },
   build: {
-    outDir: 'dist',
+    outDir: '../backend/public/dist',
+    emptyOutDir: true,
     assetsDir: 'assets',
+    manifest: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]'
+      }
+    }
   },
   server: {
     port: 8080,
+    strictPort: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
 });
