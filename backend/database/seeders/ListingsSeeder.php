@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use App\Models\Listing;
 
 class ListingsSeeder extends Seeder
 {
@@ -14,21 +15,36 @@ class ListingsSeeder extends Seeder
      */
     public function run(): void
     {
-        $listings = json_decode(File::get(storage_path('app/listings.json')), true);
+        // Load JSON data
+        $jsonPath = storage_path('app/listings.json');
+        if (!File::exists($jsonPath)) {
+            throw new \Exception('listings.json not found in storage/app');
+        }
+
+        $listings = json_decode(File::get($jsonPath), true);
 
         foreach ($listings as $listing) {
-            // Convert price from string to decimal (remove currency symbol and commas)
-            $price = str_replace(['₦', ','], '', $listing['price']);
+            // Clean price: remove ₦, commas, and units (e.g., / week)
+            $price = str_replace(['₦', ',', ' / week', ' / night'], '', $listing['price']);
+            $price = floatval($price);
 
-            DB::table('listings')->insert([
+            // Extract type and status from status array
+            $type = isset($listing['status'][0]) ? strtolower($listing['status'][0]) : 'unknown';
+            $status = isset($listing['status'][1]) ? strtolower(str_replace('For ', '', $listing['status'][1])) : 'rent';
+
+            Listing::create([
                 'title' => $listing['title'],
+                'type' => $type,
                 'location' => $listing['location'],
-                'price' => (float) $price,
+                'price' => $price,
                 'bedrooms' => $listing['bedrooms'],
                 'bathrooms' => $listing['bathrooms'],
-                'status' => json_encode($listing['status']),
-                'image' => $listing['image'],
-                'description' => $listing['description'] ?? null,
+                'status' => json_encode([
+                    'type' => $type,
+                    'status' => $status
+                ]),
+                'image' => '/assets/images/' . $listing['image'],
+                'description' => $listing['description'] ?? 'A beautiful property located in ' . $listing['location'],
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

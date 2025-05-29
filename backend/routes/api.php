@@ -17,14 +17,15 @@ use App\Http\Controllers\ListingController;
 */
 
 // Public routes
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::get('/listings', [ListingController::class, 'index']);
-Route::get('/listings/{id}', [ListingController::class, 'show']);
-Route::get('/listings/filter', [ListingController::class, 'filter']);
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
+Route::get('/listings/{id}', [ListingController::class, 'show'])->name('listings.show');
+Route::get('/listings/filter', [ListingController::class, 'filter'])->name('listings.filter');
 
-// Protected routes
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', [AuthController::class, 'user']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+// Protected routes (JWT authentication)
+Route::middleware('auth.cookie')->group(function () {
+    Route::get('/user', [AuthController::class, 'me'])->name('me');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/refresh', [AuthController::class, 'refresh'])->name('refresh');
 });

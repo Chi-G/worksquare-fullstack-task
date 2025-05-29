@@ -16,6 +16,7 @@ class Listing extends Model
      */
     protected $fillable = [
         'title',
+        'type',
         'location',
         'price',
         'bedrooms',
@@ -34,54 +35,36 @@ class Listing extends Model
         'price' => 'decimal:2',
         'bedrooms' => 'integer',
         'bathrooms' => 'integer',
-        'status' => 'array',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
 
     /**
      * Scope a query to filter by location.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $location
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeLocation($query, $location)
     {
-        return $query->where('location', $location);
+        return $query->where('location', 'like', '%' . $location . '%');
     }
 
     /**
      * Scope a query to filter by property type.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $type
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeType($query, $type)
     {
-        return $query->whereJsonContains('status', $type);
+        return $query->where('type', $type);
     }
 
     /**
-     * Scope a query to filter by listing status (For Rent, For Lease, etc).
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $status
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Scope a query to filter by listing status.
      */
     public function scopeListingStatus($query, $status)
     {
-        return $query->whereJsonContains('status', $status);
+        return $query->where('status', $status);
     }
 
     /**
      * Scope a query to filter by price range.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  float  $min
-     * @param  float  $max
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopePriceRange($query, $min, $max)
     {
@@ -90,10 +73,6 @@ class Listing extends Model
 
     /**
      * Scope a query to filter by number of bedrooms.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  int  $bedrooms
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeBedrooms($query, $bedrooms)
     {
