@@ -20,8 +20,8 @@ use App\Http\Controllers\ListingController;
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
-Route::get('/listings/{id}', [ListingController::class, 'show'])->name('listings.show');
 Route::get('/listings/filter', [ListingController::class, 'filter'])->name('listings.filter');
+Route::get('/listings/{id}', [ListingController::class, 'show'])->name('listings.show');
 
 // Protected routes (JWT authentication)
 Route::middleware('auth.cookie')->group(function () {
