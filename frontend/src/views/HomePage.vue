@@ -84,5 +84,8 @@ import AppFooter from '../components/AppFooter.vue';
 export default {
   name: 'HomePage',
   components: { NavBar, AppFooter },
+  mounted() {
+    console.log('HomePage.vue mounted');
+  },
 };
 </script>

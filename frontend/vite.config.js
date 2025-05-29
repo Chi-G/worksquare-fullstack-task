@@ -4,14 +4,14 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/dist/',
+  base: '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
   },
   build: {
-    outDir: '../backend/public/dist',
+    outDir: 'dist',
     emptyOutDir: true,
     assetsDir: 'assets',
     manifest: true,
@@ -20,12 +20,12 @@ export default defineConfig({
         manualChunks: undefined,
         entryFileNames: 'assets/[name].[hash].js',
         chunkFileNames: 'assets/[name].[hash].js',
-        assetFileNames: 'assets/[name].[hash].[ext]'
-      }
-    }
+        assetFileNames: 'assets/[name].[hash].[ext]',
+      },
+    },
   },
   server: {
-    port: 8080,
+    port: 3000,
     strictPort: true,
     proxy: {
       '/api': {

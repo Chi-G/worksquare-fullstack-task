@@ -1,6 +1,6 @@
 <template>
   <footer class="bg-gray-900 text-white py-10">
-    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
       <div>
         <h3 class="text-xl font-bold mb-4">🏠 DreamWell Estate</h3>
         <p>A great platform to buy, sell and rent your properties without any agent or commissions.</p>

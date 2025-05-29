@@ -1,89 +1,91 @@
 <template>
-  <nav :class="['bg-white p-4 transition-all duration-300', isScrolled ? 'fixed top-0 left-0 right-0 shadow-lg z-50' : '']">
-    <div class="container mx-auto">
-      <!-- Desktop Menu -->
-      <div class="flex justify-between items-center">
-        <div class="flex items-center space-x-4">
-          <span class="text-2xl font-bold text-green-600">🏠 DreamWell Estate</span>
-          <span v-if="user" class="text-gray-700">Welcome, {{ user.name }}!</span>
-        </div>
-        
-        <!-- Mobile Menu Button - Visible on mobile (<768px), hidden on desktop (≥768px) -->
-        <div class="block md:hidden">
-          <button @click="toggleMenu" class="text-gray-600 hover:text-green-600">
-            <svg v-if="!isMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
+  <div>
+    <nav :class="['bg-white p-4 transition-all duration-300', isScrolled ? 'fixed top-0 left-0 right-0 shadow-lg z-50' : '']">
+      <div class="container mx-auto px-4">
+        <!-- Desktop Menu -->
+        <div class="flex justify-between items-center">
+          <div class="flex items-center space-x-4">
+            <span class="text-2xl font-bold text-green-600">🏠 DreamWell Estate</span>
+            <span v-if="user" class="text-gray-700">Welcome, {{ user.name }}!</span>
+          </div>
+          
+          <!-- Mobile Menu Button - Visible on mobile (<768px), hidden on desktop (≥768px) -->
+          <div class="block md:hidden">
+            <button @click="toggleMenu" class="text-gray-600 hover:text-green-600">
+              <svg v-if="!isMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+              <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Desktop Navigation - Visible on desktop (≥768px), hidden on mobile (<768px) -->
+          <div class="hidden md:flex items-center space-x-4">
+            <router-link 
+              to="/" 
+              class="hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
+              active-class="bg-green-600 text-white"
+            >Home</router-link>
+            <router-link 
+              to="/property" 
+              class="hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
+              active-class="bg-green-600 text-white"
+            >Property</router-link>
+            <router-link 
+              to="/contact" 
+              class="hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
+              active-class="bg-green-600 text-white"
+            >Contact</router-link>
+            <div v-if="!user" class="flex space-x-6">
+              <router-link to="/login">
+                <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Become an Agent</button>
+              </router-link>
+              <router-link to="/login">
+                <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Login</button>
+              </router-link>
+            </div>
+            <div v-else class="flex space-x-6">
+              <button @click="logout" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
+            </div>
+          </div>
         </div>
 
-        <!-- Desktop Navigation - Visible on desktop (≥768px), hidden on mobile (<768px) -->
-        <div class="hidden md:flex items-center space-x-4">
+        <!-- Mobile Navigation - Visible when menu is open on mobile -->
+        <div v-show="isMenuOpen" class="md:hidden mt-4 space-y-2">
           <router-link 
             to="/" 
-            class="hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
+            class="block hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
             active-class="bg-green-600 text-white"
           >Home</router-link>
           <router-link 
             to="/property" 
-            class="hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
+            class="block hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
             active-class="bg-green-600 text-white"
           >Property</router-link>
           <router-link 
-            to="/contact" 
-            class="hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
+            to="/contact"  
+            class="block hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
             active-class="bg-green-600 text-white"
           >Contact</router-link>
-          <div v-if="!user" class="flex space-x-6">
+          <div v-if="!user" class="flex flex-col space-y-4 pt-2">
             <router-link to="/login">
-              <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Become an Agent</button>
+              <button class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Become an Agent</button>
             </router-link>
             <router-link to="/login">
-              <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Login</button>
+              <button class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Login</button>
             </router-link>
           </div>
-          <div v-else class="flex space-x-6">
-            <button @click="logout" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
+          <div v-else class="flex flex-col space-y-4 pt-2">
+            <button @click="logout" class="w-full bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
           </div>
         </div>
       </div>
-
-      <!-- Mobile Navigation - Visible when menu is open on mobile -->
-      <div v-show="isMenuOpen" class="md:hidden mt-4 space-y-2">
-        <router-link 
-          to="/" 
-          class="block hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
-          active-class="bg-green-600 text-white"
-        >Home</router-link>
-        <router-link 
-          to="/property" 
-          class="block hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
-          active-class="bg-green-600 text-white"
-        >Property</router-link>
-        <router-link 
-          to="/contact"  
-          class="block hover:text-green-600 px-4 py-2 rounded-lg transition-colors"
-          active-class="bg-green-600 text-white"
-        >Contact</router-link>
-        <div v-if="!user" class="flex flex-col space-y-4 pt-2">
-          <router-link to="/login">
-            <button class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Become an Agent</button>
-          </router-link>
-          <router-link to="/login">
-            <button class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">Login</button>
-          </router-link>
-        </div>
-        <div v-else class="flex flex-col space-y-4 pt-2">
-          <button @click="logout" class="w-full bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Logout</button>
-        </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
   <!-- Spacer div to prevent content from hiding behind fixed navbar -->
   <div v-if="isScrolled" class="h-16"></div>
+</div>
 </template>
 
 <script>
