@@ -13,9 +13,9 @@ api.interceptors.request.use(
     const auth = JSON.parse(localStorage.getItem('auth'));
     if (auth && auth.token) {
       config.headers.Authorization = `Bearer ${auth.token}`;
-      console.log('Sending request with token:', auth.token.substring(0, 20) + '...');
+      console.log('Request with token:', auth.token.substring(0, 20) + '...', config.url);
     } else {
-      console.log('No token found in localStorage');
+      console.log('No token for request:', config.url);
     }
     return config;
   },
@@ -27,21 +27,30 @@ api.interceptors.response.use(
   (error) => {
     if (!error.response) {
       console.error('Network error:', error.message);
-    } else if (error.response.status === 401) {
-      console.error('401 Unauthorized:', error.response.data);
+    } else {
+      console.error(`Error ${error.response.status} on ${error.config.url}:`, error.response.data);
+    }
+    if (error.response?.status === 401 && window.location.pathname !== '/login') {
       localStorage.removeItem('auth');
       localStorage.removeItem('user');
-      if (window.location.pathname !== '/login') {
-        window.location.href = '/login';
-      }
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }
 );
 
-export const getListings = (page = 1) => api.get(`/listings?page=${page}`);
-export const getListing = (id) => api.get(`/listings/${id}`);
-export const filterListings = (params) => api.get('/listings/filter', { params });
+export const getListings = async (page = 1) => {
+  const response = await api.get(`/listings?page=${page}`);
+  console.log('getListings response:', JSON.stringify(response.data, null, 2));
+  return response;
+};
+
+export const filterListings = async (params) => {
+  const response = await api.get('/listings/filter', { params });
+  console.log('filterListings response:', JSON.stringify(response.data, null, 2));
+  return response;
+};
+
 export const login = async (data) => {
   const response = await api.post('/login', data);
   const { user } = response.data;
@@ -55,6 +64,7 @@ export const login = async (data) => {
   }));
   return response;
 };
+
 export const register = async (data) => {
   const response = await api.post('/register', data);
   const { user } = response.data;
@@ -68,10 +78,13 @@ export const register = async (data) => {
   }));
   return response;
 };
+
 export const logout = async () => {
   await api.post('/logout');
   localStorage.removeItem('auth');
   localStorage.removeItem('user');
 };
+
 export const getMe = () => api.get('/user');
+
 export default api;
