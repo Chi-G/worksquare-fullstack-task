@@ -24,7 +24,7 @@ composer install
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=dreamdrealestates
+DB_DATABASE=worksquare-fullstack-task
 DB_USERNAME=root
 DB_PASSWORD=
 JWT_SECRET=your_jwt_secret
