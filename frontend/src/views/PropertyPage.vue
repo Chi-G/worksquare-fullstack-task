@@ -175,7 +175,11 @@ export default {
       return Number(price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
     listingImage(listing) {
-      return listing.image ? listing.image : '/assets/images/property/default.jpg';
+      const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000';
+      const imagePath = listing.image || '/assets/images/property/default.jpg';
+      // Remove leading slash to avoid double slashes
+      const cleanPath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath;
+      return `${baseUrl}/${cleanPath}`;
     },
     parseStatus(status) {
       try {
