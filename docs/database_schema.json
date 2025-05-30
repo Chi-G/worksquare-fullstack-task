@@ -1,0 +1,32 @@
+{
+    "tables": [
+      {
+        "name": "users",
+        "columns": [
+          { "name": "id", "type": "bigint", "unsigned": true, "auto_increment": true, "primary": true },
+          { "name": "name", "type": "varchar(255)", "nullable": false },
+          { "name": "email", "type": "varchar(255)", "nullable": false, "unique": true },
+          { "name": "password", "type": "varchar(255)", "nullable": false },
+          { "name": "created_at", "type": "timestamp", "nullable": true },
+          { "name": "updated_at", "type": "timestamp", "nullable": true }
+        ]
+      },
+      {
+        "name": "listings",
+        "columns": [
+          { "name": "id", "type": "bigint", "unsigned": true, "auto_increment": true, "primary": true },
+          { "name": "title", "type": "varchar(255)", "nullable": false },
+          { "name": "type", "type": "varchar(50)", "nullable": false },
+          { "name": "location", "type": "varchar(255)", "nullable": false },
+          { "name": "price", "type": "decimal(15,2)", "nullable": false },
+          { "name": "bedrooms", "type": "integer", "nullable": false },
+          { "name": "bathrooms", "type": "integer", "nullable": false },
+          { "name": "status", "type": "json", "nullable": false },
+          { "name": "image", "type": "varchar(255)", "nullable": true },
+          { "name": "description", "type": "text", "nullable": true },
+          { "name": "created_at", "type": "timestamp", "nullable": true },
+          { "name": "updated_at", "type": "timestamp", "nullable": true }
+        ]
+      }
+    ]
+  }

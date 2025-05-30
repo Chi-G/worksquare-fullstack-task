@@ -68,7 +68,7 @@ class AuthController extends Controller
             ]);
 
             $token = JWTAuth::fromUser($user);
-            $cookie = cookie('jwt', $token, 60 * 24, null, null, true, true); //for 1 day, secure, httpOnly
+            $cookie = cookie('jwt', $token, 60 * 24, null, null, true, true);
 
             return response()->json([
                 'user' => $user,
@@ -138,7 +138,7 @@ class AuthController extends Controller
             }
 
             $user = Auth::user();
-            $cookie = cookie('jwt', $token, 60 * 24, null, null, true, true); //for 1 day, secure, httpOnly
+            $cookie = cookie('jwt', $token, 60 * 24, null, null, true, true);
 
             return response()->json([
                 'user' => $user,
@@ -261,7 +261,7 @@ class AuthController extends Controller
     {
         try {
             $token = JWTAuth::refresh(JWTAuth::getToken());
-            $cookie = cookie('jwt', $token, 60 * 24, null, null, true, true); // for 1 day, secure, httpOnly
+            $cookie = cookie('jwt', $token, 60 * 24, null, null, true, true);
 
             return response()->json([
                 'message' => 'Token refreshed successfully',

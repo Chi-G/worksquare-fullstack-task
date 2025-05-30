@@ -1,0 +1,148 @@
+openapi: 3.0.3
+info:
+  title: DreamDrealEstates API
+  version: 1.0.0
+paths:
+  /api/login:
+    post:
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id: { type: integer }
+                      name: { type: string }
+                      email: { type: string }
+                      token: { type: string }
+        '401':
+          description: Unauthorized
+  /api/logout:
+    post:
+      summary: User logout
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful logout
+        '401':
+          description: Unauthorized
+  /api/listings:
+    get:
+      summary: Get paginated listings
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: List of listings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Listing'
+                  last_page: { type: integer }
+        '401':
+          description: Unauthorized
+  /api/listings/filter:
+    get:
+      summary: Filter listings
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: title
+          in: query
+          schema:
+            type: string
+        - name: location
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [rent, lease, shortlet]
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [house, flat, duplex, penthouse, terrace, apartment, mansion, shortlet]
+        - name: min_price
+          in: query
+          schema:
+            type: number
+        - name: max_price
+          in: query
+          schema:
+            type: number
+        - name: bedrooms
+          in: query
+          schema:
+            type: integer
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: Filtered listings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Listing'
+                  last_page: { type: integer }
+        '401':
+          description: Unauthorized
+components:
+  schemas:
+    Listing:
+      type: object
+      properties:
+        id: { type: integer }
+        title: { type: string }
+        type: { type: string }
+        location: { type: string }
+        price: { type: number }
+        bedrooms: { type: integer }
+        bathrooms: { type: integer }
+        status: { type: string }
+        image: { type: string }
+        description: { type: string }
+        created_at: { type: string, format: date-time }
+        updated_at: { type: string, format: date-time }
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
